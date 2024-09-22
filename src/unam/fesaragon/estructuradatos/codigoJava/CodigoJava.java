@@ -1,6 +1,9 @@
 package unam.fesaragon.estructuradatos.codigoJava;
 
 import unam.fesaragon.estructuradatos.ADT.ADTStack;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 public class CodigoJava {
     private String codigoJavaEnString;
@@ -9,6 +12,9 @@ public class CodigoJava {
 
     public CodigoJava(String urlArchivo) {
         this.urlArchivo = urlArchivo;
+        try {
+        this.codigoJavaEnString = new String(Files.readAllBytes(Paths.get(urlArchivo)));
+        }catch (IOException e){System.out.println(e);}
         pilaLlavesOParentesis = new ADTStack<>();
     }
 
@@ -17,11 +23,9 @@ public class CodigoJava {
     }
 
     public void ejecutarCodigo() {
-        // Lectura de código
-        // Comprobación de errores
-        codigoJavaEnString = "{{()}}";
+        //Comprobación de errores con el código cargado
         boolean estaBalanceado = cargarPilaBalanceo(codigoJavaEnString);
-        System.out.println((estaBalanceado)? "Esta balanceado": "No esta balanceado");
+        System.out.println((estaBalanceado) ? "Está balanceado": "No está balanceado");
     }
 
     private boolean cargarPilaBalanceo(String codigo) {
